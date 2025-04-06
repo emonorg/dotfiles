@@ -1,0 +1,30 @@
+[
+  {
+    "context": "ProjectPanel",
+    "bindings": {
+      "space": null,
+      "enter": "project_panel::Open",
+      "space w w": "workspace::ActivatePaneRight"
+    }
+  },
+  {
+    "context": "Editor && vim_mode == normal && vim_operator == none && !VimWaiting",
+    "bindings": {
+      "space b d": "pane::CloseActiveItem",
+      "space space": "file_finder::Toggle",
+      "space /": "project_search::SearchInNew",
+      "space t": "workspace::ToggleBottomDock",
+      "space c c": [
+        "editor::ToggleComments",
+        {
+          "advance_downwards": false
+        }
+      ],
+      "space e": "project_panel::ToggleFocus",
+      "space E": "workspace::ToggleLeftDock",
+      "space w w": "workspace::ActivateNextPane",
+      "H": "pane::ActivatePreviousItem",
+      "L": "pane::ActivateNextItem"
+    }
+  }
+]
