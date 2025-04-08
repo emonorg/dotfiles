@@ -6,7 +6,8 @@
       "enter": "project_panel::Open",
       "space w w": "workspace::ActivatePaneRight",
       "a": "project_panel::NewFile",
-      "A": "project_panel::NewDirectory"
+      "A": "project_panel::NewDirectory",
+      "r": "project_panel::Rename"
     }
   },
   {
