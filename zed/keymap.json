@@ -4,13 +4,14 @@
     "bindings": {
       "space": null,
       "enter": "project_panel::Open",
-      "space w w": "workspace::ActivatePaneRight"
+      "space w w": "workspace::ActivatePaneRight",
+      "a": "project_panel::NewFile",
+      "A": "project_panel::NewDirectory"
     }
   },
   {
     "context": "Editor && vim_mode == normal && vim_operator == none && !VimWaiting",
     "bindings": {
-      "space b d": "pane::CloseActiveItem",
       "space space": "file_finder::Toggle",
       "space /": "project_search::SearchInNew",
       "space t": "workspace::ToggleBottomDock",
