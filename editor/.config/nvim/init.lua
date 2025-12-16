@@ -30,6 +30,8 @@ local cmp = dofile(vim.fn.stdpath("config") .. "/plugins/cmp.lua")
 local autopairs = dofile(vim.fn.stdpath("config") .. "/plugins/autopairs.lua")
 local telescope = dofile(vim.fn.stdpath("config") .. "/plugins/telescope.lua")
 local bufferline = dofile(vim.fn.stdpath("config") .. "/plugins/bufferline.lua")
+local treesitter = dofile(vim.fn.stdpath("config") .. "/plugins/treesitter.lua")
+local lualine = dofile(vim.fn.stdpath("config") .. "/plugins/lualine.lua")
 require("lazy").setup({
 	colorscheme,
 	lsp[1], -- mason.nvim
@@ -39,6 +41,8 @@ require("lazy").setup({
 	autopairs, -- nvim-autopairs
 	telescope, -- telescope.nvim
 	bufferline, -- bufferline.nvim
+	treesitter, -- nvim-treesitter
+	lualine, -- statusline
 })
 
 -- ============================================================================

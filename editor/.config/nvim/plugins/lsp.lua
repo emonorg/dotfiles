@@ -19,6 +19,7 @@ return {
 					"rust_analyzer",   -- Rust
 					"lua_ls",          -- Lua
 					"clangd",          -- C/C++
+					"gopls",           -- Go
 					"html",            -- HTML
 					"cssls",           -- CSS
 					"jsonls",          -- JSON
@@ -38,6 +39,20 @@ return {
 			"hrsh7th/cmp-nvim-lsp",
 		},
 		config = function()
+			-- Global diagnostics configuration
+			vim.diagnostic.config({
+				-- Disable inline virtual text; use floating windows instead
+				virtual_text = false,
+				signs = true,
+				underline = true,
+				update_in_insert = false,
+				severity_sort = true,
+				float = {
+					source = "always",
+					border = "rounded",
+				},
+			})
+
 			-- Setup LSP capabilities for nvim-cmp
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
@@ -70,7 +85,7 @@ return {
 				callback = function(args)
 					local bufnr = args.buf
 					local opts = { buffer = bufnr, silent = true }
-					
+
 					-- Key mappings
 					vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
 					vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
@@ -84,9 +99,31 @@ return {
 					end, opts)
 					vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
 					vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
-					
+
+					-- Copy diagnostics at cursor to clipboard / unnamed register
+					vim.keymap.set("n", "<leader>er", function()
+						local diagnostics = vim.diagnostic.get(0, { lnum = vim.api.nvim_win_get_cursor(0)[1] - 1 })
+						if vim.tbl_isempty(diagnostics) then
+							return
+						end
+						local lines = {}
+						for _, d in ipairs(diagnostics) do
+							table.insert(lines, d.message)
+						end
+						local text = table.concat(lines, "\n")
+						vim.fn.setreg('"', text)
+						pcall(vim.fn.setreg, "+", text)
+					end, vim.tbl_extend("force", opts, { desc = "Copy diagnostics at cursor" }))
+
 					-- Signature help
 					vim.keymap.set("i", "<C-s>", vim.lsp.buf.signature_help, opts)
+				end,
+			})
+
+			-- Automatically show diagnostics in a floating window when holding the cursor
+			vim.api.nvim_create_autocmd("CursorHold", {
+				callback = function()
+					vim.diagnostic.open_float(nil, { focus = false, scope = "cursor" })
 				end,
 			})
 
@@ -135,6 +172,14 @@ return {
 				},
 			})
 
+			-- Go
+			vim.lsp.config("gopls", {
+				cmd = { "gopls" },
+				filetypes = { "go", "gomod", "gowork", "gotmpl" },
+				root_markers = { "go.work", "go.mod", ".git" },
+				capabilities = capabilities,
+			})
+
 			-- C/C++
 			vim.lsp.config("clangd", {
 				cmd = { "clangd" },
@@ -176,7 +221,7 @@ return {
 			})
 
 			-- Enable LSP servers
-			vim.lsp.enable({ "ts_ls", "rust_analyzer", "lua_ls", "clangd", "html", "cssls", "jsonls", "yamlls" })
+			vim.lsp.enable({ "ts_ls", "rust_analyzer", "lua_ls", "clangd", "gopls", "html", "cssls", "jsonls", "yamlls" })
 		end,
 	},
 }
