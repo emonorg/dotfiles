@@ -32,11 +32,13 @@ local telescope = dofile(vim.fn.stdpath("config") .. "/plugins/telescope.lua")
 local bufferline = dofile(vim.fn.stdpath("config") .. "/plugins/bufferline.lua")
 local treesitter = dofile(vim.fn.stdpath("config") .. "/plugins/treesitter.lua")
 local lualine = dofile(vim.fn.stdpath("config") .. "/plugins/lualine.lua")
+local fidget = dofile(vim.fn.stdpath("config") .. "/plugins/fidget.lua")
 require("lazy").setup({
 	colorscheme,
 	lsp[1], -- mason.nvim
 	lsp[2], -- mason-lspconfig.nvim
 	lsp[3], -- nvim-lspconfig
+	fidget, -- LSP progress notifications
 	cmp[1], -- nvim-cmp
 	autopairs, -- nvim-autopairs
 	telescope, -- telescope.nvim
