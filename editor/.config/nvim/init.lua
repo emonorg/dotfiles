@@ -33,6 +33,7 @@ local bufferline = dofile(vim.fn.stdpath("config") .. "/plugins/bufferline.lua")
 local treesitter = dofile(vim.fn.stdpath("config") .. "/plugins/treesitter.lua")
 local lualine = dofile(vim.fn.stdpath("config") .. "/plugins/lualine.lua")
 local fidget = dofile(vim.fn.stdpath("config") .. "/plugins/fidget.lua")
+local conform = dofile(vim.fn.stdpath("config") .. "/plugins/conform.lua")
 require("lazy").setup({
 	colorscheme,
 	lsp[1], -- mason.nvim
@@ -45,6 +46,7 @@ require("lazy").setup({
 	bufferline, -- bufferline.nvim
 	treesitter, -- nvim-treesitter
 	lualine, -- statusline
+	conform, -- formatting with conditional prettier
 })
 
 -- ============================================================================
@@ -116,6 +118,20 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     local save_cursor = vim.fn.getpos(".")
     vim.cmd([[%s/\s\+$//e]])
     vim.fn.setpos(".", save_cursor)
+  end,
+})
+
+-- Format on save using conform.nvim (will use Prettier if config exists, otherwise LSP)
+local conform = require("conform")
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*",
+  callback = function(args)
+    conform.format({
+      bufnr = args.buf,
+      lsp_fallback = true,
+      timeout_ms = 3000,
+      async = false,
+    })
   end,
 })
 
