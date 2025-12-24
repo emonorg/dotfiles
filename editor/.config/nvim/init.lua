@@ -143,3 +143,17 @@ vim.g.netrw_banner = 0
 vim.g.netrw_liststyle = 3
 vim.g.netrw_browse_split = 0
 vim.g.netrw_winsize = 25
+
+-- ============================================================================
+-- TypeScript LSP Switcher Commands
+-- ============================================================================
+
+-- Command to switch TypeScript LSP
+vim.api.nvim_create_user_command("TSLspSwitch", function()
+	require("ts-lsp-switcher").select_lsp()
+end, { desc = "Switch between TypeScript LSP implementations" })
+
+-- Command to check LSP availability
+vim.api.nvim_create_user_command("TSLspCheck", function()
+	require("ts-lsp-switcher").check_availability()
+end, { desc = "Check TypeScript LSP availability" })

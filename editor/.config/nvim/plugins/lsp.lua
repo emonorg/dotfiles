@@ -15,7 +15,7 @@ return {
 		config = function()
 			require("mason-lspconfig").setup({
 				ensure_installed = {
-					"ts_ls",           -- TypeScript/JavaScript
+					-- ts_ls removed - using tsgo instead
 					"rust_analyzer",   -- Rust
 					"lua_ls",          -- Lua
 					"clangd",          -- C/C++
@@ -26,6 +26,13 @@ return {
 					"yamlls",          -- YAML
 				},
 				automatic_installation = true,
+				-- Disable automatic handlers to prevent ts_ls from being set up
+				handlers = {
+					-- Default handler for all servers
+					function(server_name)
+						-- Do nothing - we configure servers manually below
+					end,
+				},
 			})
 		end,
 	},
@@ -127,13 +134,10 @@ return {
 				end,
 			})
 
-			-- TypeScript/JavaScript
-			vim.lsp.config("ts_ls", {
-				cmd = { "typescript-language-server", "--stdio" },
-				filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
-				root_markers = { "package.json", "tsconfig.json", "jsconfig.json" },
-				capabilities = capabilities,
-			})
+			-- Initialize TypeScript LSP Switcher
+			-- This will configure and start the preferred TypeScript LSP (tsgo or ts_ls)
+			local ts_switcher = require("ts-lsp-switcher")
+			ts_switcher.init()
 
 			-- Rust
 			vim.lsp.config("rust_analyzer", {
@@ -220,8 +224,8 @@ return {
 				capabilities = capabilities,
 			})
 
-			-- Enable LSP servers
-			vim.lsp.enable({ "ts_ls", "rust_analyzer", "lua_ls", "clangd", "gopls", "html", "cssls", "jsonls", "yamlls" })
+			-- Enable LSP servers (TypeScript LSP is managed by ts-lsp-switcher)
+			vim.lsp.enable({ "rust_analyzer", "lua_ls", "clangd", "gopls", "html", "cssls", "jsonls", "yamlls" })
 		end,
 	},
 }
