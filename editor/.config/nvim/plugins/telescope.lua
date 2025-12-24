@@ -16,7 +16,13 @@ return {
 
 		telescope.setup({
 			defaults = {
-				path_display = { "smart" },
+				path_display = function(opts, path)
+					local tail = require("telescope.utils").path_tail(path)
+					local parent = vim.fn.fnamemodify(path, ":h:t")
+					local grandparent = vim.fn.fnamemodify(path, ":h:h:t")
+					local greatgrandparent = vim.fn.fnamemodify(path, ":h:h:h:t")
+					return string.format("%s/%s/%s/%s", greatgrandparent, grandparent, parent, tail)
+				end,
 				mappings = {
 					i = {
 						["<C-k>"] = actions.move_selection_previous,
