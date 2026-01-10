@@ -16,6 +16,7 @@ return {
 
 		telescope.setup({
 			defaults = {
+				file_ignore_patterns = { "^%.git/" },
 				path_display = function(opts, path)
 					local tail = require("telescope.utils").path_tail(path)
 					local parent = vim.fn.fnamemodify(path, ":h:t")
