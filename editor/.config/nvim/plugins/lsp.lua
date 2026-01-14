@@ -24,6 +24,7 @@ return {
 					"cssls",           -- CSS
 					"jsonls",          -- JSON
 					"yamlls",          -- YAML
+					"buf_ls",          -- Protocol Buffers
 				},
 				automatic_installation = true,
 				-- Disable automatic handlers to prevent ts_ls from being set up
@@ -224,8 +225,16 @@ return {
 				capabilities = capabilities,
 			})
 
+			-- Protocol Buffers
+			vim.lsp.config("buf_ls", {
+				cmd = { "buf", "beta", "lsp" },
+				filetypes = { "proto" },
+				root_markers = { "buf.yaml", "buf.work.yaml", ".git" },
+				capabilities = capabilities,
+			})
+
 			-- Enable LSP servers (TypeScript LSP is managed by ts-lsp-switcher)
-			vim.lsp.enable({ "rust_analyzer", "lua_ls", "clangd", "gopls", "html", "cssls", "jsonls", "yamlls" })
+			vim.lsp.enable({ "rust_analyzer", "lua_ls", "clangd", "gopls", "html", "cssls", "jsonls", "yamlls", "buf_ls" })
 		end,
 	},
 }

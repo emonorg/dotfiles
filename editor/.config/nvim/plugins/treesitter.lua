@@ -20,6 +20,7 @@ return {
 				"css",
 				"markdown",
 				"markdown_inline",
+				"proto",
 			},
 			highlight = {
 				enable = true,
