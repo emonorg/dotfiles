@@ -1,0 +1,2 @@
+# Neovim lazy.nvim lock file - let each machine manage its own plugin versions
+editor/.config/nvim/lazy-lock.json
