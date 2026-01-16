@@ -7,6 +7,12 @@ return {
 		"rcarriga/nvim-notify",
 	},
 	opts = {
+		cmdline = {
+			enabled = false, -- disable noice cmdline, use classic vim cmdline
+		},
+		messages = {
+			enabled = false, -- disable noice messages to allow native cmdline to show
+		},
 		lsp = {
 			progress = {
 				enabled = true,
