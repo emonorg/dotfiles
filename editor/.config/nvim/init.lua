@@ -30,7 +30,7 @@ local cmp = dofile(vim.fn.stdpath("config") .. "/plugins/cmp.lua")
 local autopairs = dofile(vim.fn.stdpath("config") .. "/plugins/autopairs.lua")
 local telescope = dofile(vim.fn.stdpath("config") .. "/plugins/telescope.lua")
 local bufferline = dofile(vim.fn.stdpath("config") .. "/plugins/bufferline.lua")
-local treesitter = dofile(vim.fn.stdpath("config") .. "/plugins/treesitter.lua")
+local neotree = dofile(vim.fn.stdpath("config") .. "/plugins/neotree.lua")
 local lualine = dofile(vim.fn.stdpath("config") .. "/plugins/lualine.lua")
 local fidget = dofile(vim.fn.stdpath("config") .. "/plugins/fidget.lua")
 local conform = dofile(vim.fn.stdpath("config") .. "/plugins/conform.lua")
@@ -44,7 +44,7 @@ require("lazy").setup({
 	autopairs, -- nvim-autopairs
 	telescope, -- telescope.nvim
 	bufferline, -- bufferline.nvim
-	treesitter, -- nvim-treesitter
+	neotree, -- neo-tree
 	lualine, -- statusline
 	conform, -- formatting with conditional prettier
 })

@@ -8,6 +8,7 @@ vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Move to left window" })
 vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Move to bottom window" })
 vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Move to top window" })
 vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Move to right window" })
+vim.keymap.set("n", "<leader>ww", "<C-w>w", { desc = "Move to the new window" })
 
 -- Resize windows
 vim.keymap.set("n", "<C-Up>", "<cmd>resize +2<CR>", { desc = "Increase window height" })
@@ -20,15 +21,9 @@ vim.keymap.set("n", "<leader>bd", "<cmd>bdelete<CR>", { desc = "Delete buffer" }
 vim.keymap.set("n", "<S-l>", "<cmd>BufferLineCycleNext<CR>", { desc = "Next buffer" })
 vim.keymap.set("n", "<S-h>", "<cmd>BufferLineCyclePrev<CR>", { desc = "Previous buffer" })
 
--- Save and quit
-vim.keymap.set("n", "<leader>w", "<cmd>w<CR>", { desc = "Save file" })
-vim.keymap.set("n", "<leader>wa", "<cmd>wa<CR>", { desc = "Save all files" })
-vim.keymap.set("n", "<leader>q", "<cmd>confirm q<CR>", { desc = "Quit (with confirmation if unsaved)" })
-vim.keymap.set("n", "<leader>qa", "<cmd>confirm qa<CR>", { desc = "Quit all (with confirmation)" })
-vim.keymap.set("n", "<leader>Q", "<cmd>qa!<CR>", { desc = "Quit all without saving" })
-
 -- File explorer
-vim.keymap.set("n", "<leader>e", "<cmd>Explore<CR>", { desc = "Open file explorer" })
+vim.keymap.set("n", "<leader>ee", "<cmd>Neotree toggle<CR>", { desc = "Open file explorer" })
+vim.keymap.set("n", "<leader>e", "<cmd>Neotree reveal<CR>", { desc = "Reveal the file" })
 
 -- Better indenting
 vim.keymap.set("v", "<", "<gv")
