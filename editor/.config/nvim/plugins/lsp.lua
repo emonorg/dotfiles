@@ -25,6 +25,7 @@ return {
 					"jsonls",          -- JSON
 					"yamlls",          -- YAML
 					"buf_ls",          -- Protocol Buffers
+					"basedpyright",    -- Python
 				},
 				automatic_installation = true,
 				-- Disable automatic handlers to prevent ts_ls from being set up
@@ -135,10 +136,13 @@ return {
 				end,
 			})
 
-			-- Initialize TypeScript LSP Switcher
-			-- This will configure and start the preferred TypeScript LSP (tsgo or ts_ls)
-			local ts_switcher = require("ts-lsp-switcher")
-			ts_switcher.init()
+			-- TypeScript/JavaScript
+			vim.lsp.config("ts_ls", {
+				cmd = { "typescript-language-server", "--stdio" },
+				filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+				root_markers = { "package.json", "tsconfig.json", "jsconfig.json" },
+				capabilities = capabilities,
+			})
 
 			-- Rust
 			vim.lsp.config("rust_analyzer", {
@@ -233,8 +237,42 @@ return {
 				capabilities = capabilities,
 			})
 
-			-- Enable LSP servers (TypeScript LSP is managed by ts-lsp-switcher)
-			vim.lsp.enable({ "rust_analyzer", "lua_ls", "clangd", "gopls", "html", "cssls", "jsonls", "yamlls", "buf_ls" })
+			-- Python
+			-- Uses the git root (not the nearest pyproject.toml) so uv workspaces
+			-- like `ea` resolve to the folder that holds the shared .venv.
+			vim.lsp.config("basedpyright", {
+				cmd = { "basedpyright-langserver", "--stdio" },
+				filetypes = { "python" },
+				root_markers = { ".git" },
+				capabilities = capabilities,
+				settings = {
+					basedpyright = {
+						analysis = { typeCheckingMode = "standard" },
+					},
+					python = { analysis = {} },
+				},
+				before_init = function(_, config)
+					local root = config.root_dir
+					if not root then
+						return
+					end
+					local python = root .. "/.venv/bin/python"
+					if vim.uv.fs_stat(python) then
+						config.settings.python.pythonPath = python
+					end
+					-- Extra import paths (no repo files needed)
+					local extra = {}
+					for _, dir in ipairs({ "subscriber_function", "ea-package/src" }) do
+						if vim.uv.fs_stat(root .. "/" .. dir) then
+							table.insert(extra, root .. "/" .. dir)
+						end
+					end
+					config.settings.python.analysis.extraPaths = extra
+				end,
+			})
+
+			-- Enable LSP servers
+			vim.lsp.enable({ "ts_ls", "rust_analyzer", "lua_ls", "clangd", "gopls", "html", "cssls", "jsonls", "yamlls", "buf_ls", "basedpyright" })
 		end,
 	},
 }
