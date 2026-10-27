@@ -74,7 +74,7 @@ vim.opt.hlsearch = true
 vim.opt.incsearch = true
 
 -- UI
-vim.opt.cursorline = true
+vim.opt.cursorline = false
 vim.opt.termguicolors = true
 vim.opt.signcolumn = "yes"
 vim.opt.scrolloff = 8
@@ -89,6 +89,7 @@ vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.undofile = true
 vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+vim.opt.guicursor = "a:block"
 
 -- Split windows
 vim.opt.splitbelow = true
