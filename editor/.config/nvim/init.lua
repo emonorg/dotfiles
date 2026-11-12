@@ -57,6 +57,7 @@ require("lazy").setup({
 -- ============================================================================
 
 -- Line numbers
+vim.opt.autoread = true
 vim.opt.number = true
 vim.opt.relativenumber = true
 
