@@ -44,14 +44,19 @@ precmd() {
 
   # Gruvbox-ish colors
   local USER="%n"
-  local DIR="%F{214}%1~%f"      # yellow dir
+  local DIR="%F{220}%1~%f"      # yellow dir
   local BRANCH=""
 
   if [[ -n ${vcs_info_msg_0_} ]]; then
     BRANCH=" (%F{67}${vcs_info_msg_0_}%f)"   # blue branch
   fi
 
-  PROMPT="[$USER $DIR]$BRANCH | "
+  local VENV=""
+  if [[ -n $VIRTUAL_ENV ]]; then
+    VENV="%F{245}(${VIRTUAL_ENV:t})%f "
+  fi
+
+  PROMPT="[$USER $DIR]$BRANCH ${VENV}| "
 }
 
 export PATH="/usr/local/bin:$PATH"

@@ -49,7 +49,8 @@ require("lazy").setup({
   neotree,    -- neo-tree
   lualine,    -- statusline
   conform,    -- formatting with conditional prettier
-  bufremove
+  bufremove,
+  dofile(vim.fn.stdpath("config") .. "/plugins/treesitter.lua"),
 })
 
 -- ============================================================================
