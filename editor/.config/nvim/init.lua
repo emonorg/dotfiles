@@ -37,7 +37,7 @@ local conform = dofile(vim.fn.stdpath("config") .. "/plugins/conform.lua")
 local bufremove = dofile(vim.fn.stdpath("config") .. "/plugins/bufremove.lua")
 
 require("lazy").setup({
-  colorscheme,
+  colorscheme, -- vim-code-dark
   lsp[1],     -- mason.nvim
   lsp[2],     -- mason-lspconfig.nvim
   lsp[3],     -- nvim-lspconfig

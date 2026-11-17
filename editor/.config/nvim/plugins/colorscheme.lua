@@ -1,29 +1,19 @@
 -- Colorscheme configuration
 return {
-	"ellisonleao/gruvbox.nvim",
+	"tomasiser/vim-code-dark",
 	lazy = false, -- load at start
 	priority = 1000, -- load first
 	config = function()
-		require("gruvbox").setup({
-			contrast = "", -- "hard", "soft" or ""
-			palette_overrides = {
-				bright_red = "#fc6c5c", -- default #fb4934, slightly lighter
-			},
-		})
 		vim.o.background = "dark"
-		vim.cmd([[colorscheme gruvbox]])
+		vim.cmd.colorscheme("codedark")
 
-		-- Directory colors in neo-tree (blue instead of gruvbox yellow)
-		vim.api.nvim_set_hl(0, "NeoTreeDirectoryName", { fg = "#83a598" })
-		vim.api.nvim_set_hl(0, "NeoTreeDirectoryIcon", { fg = "#83a598" })
-
-		-- Distinct color for methods (e.g. the `.get` in config_json.get())
-		for _, group in ipairs({ "@function.method.call", "@function.method", "@lsp.type.method" }) do
-			vim.api.nvim_set_hl(0, group, { fg = "#8ec07c" })
+		-- codedark only styles legacy groups; map Treesitter control-flow keywords to its pink
+		local pink = { fg = "#C586C0" }
+		for _, group in ipairs({
+			"@keyword.return", "@keyword.conditional", "@keyword.repeat",
+			"@keyword.exception", "@keyword.import", "@keyword.conditional.ternary",
+		}) do
+			vim.api.nvim_set_hl(0, group, pink)
 		end
-
-		-- Make it clearly visible which argument we're at.
-		local marked = vim.api.nvim_get_hl(0, { name = 'PMenu' })
-		vim.api.nvim_set_hl(0, 'LspSignatureActiveParameter', { fg = marked.fg, bg = marked.bg, ctermfg = marked.ctermfg, ctermbg = marked.ctermbg, bold = true })
-	end
+	end,
 }
